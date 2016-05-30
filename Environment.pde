@@ -1,5 +1,28 @@
 float yoff = 0.0;
 
+String[] biomes = new String[] {
+  "DESERT",
+  "FOREST",
+  "TUNDRA",
+  "GRASSLAND",
+  "SKY",
+  "SEA",
+  "SPACE"
+};
+
+float getBiome (int distVal, int distExp)
+{
+  return noise(distVal, distExp) * biomes.length;
+}
+
+PVector getSpline (int distVal, int distExp)
+{
+  return new PVector(0, 0);
+}
+
+
+
+
 void updateNoises (double distance)
 {
   
@@ -7,9 +30,10 @@ void updateNoises (double distance)
 
 void drawEnvironment ()
 {
-  background(255, 51, 0);
+  
+  background(255);
 
-  fill(255);
+  noFill();
   // We are going to draw a polygon out of the wave points
   beginShape(); 
   

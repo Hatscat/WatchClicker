@@ -1,10 +1,14 @@
 import g4p_controls.*;
 
+int distanceValue;
+int distanceExponent;
 
 void setup ()
 {
   background(0);
   frameRate(30);
+  distanceValue = 0;
+  distanceExponent = 1;
 }
 
 void settings ()
