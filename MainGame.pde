@@ -1,7 +1,9 @@
 class MainGame {
   
+  
   void onClicked() {
-     print("caca");
+     //click anywhere on game
+     distanceText.setText("caca");
   }
   
 }

@@ -1,10 +1,13 @@
 import g4p_controls.*;
 
+MainGame game;
 
 void setup ()
 {
   background(0);
   frameRate(30);
+  game = new MainGame();
+  createGUI();
 }
 
 void settings ()
@@ -16,4 +19,8 @@ void settings ()
 void draw ()
 {
   drawEnvironment();
+}
+
+void mouseClicked() {
+  game.onClicked();
 }
