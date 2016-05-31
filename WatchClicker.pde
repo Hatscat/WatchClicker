@@ -8,7 +8,7 @@ void setup ()
   background(0);
   frameRate(30);
   distanceValue = 0;
-  distanceExponent = 1;
+  distanceExponent = 0;
 }
 
 void settings ()
