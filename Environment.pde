@@ -101,7 +101,7 @@ void drawEnvironment ()
   //vertex(0, height);
   //endShape();
   popMatrix();
-  distanceValue += speed;
+  //distanceValue += speed;
   
   //println(frameRate);
 }
