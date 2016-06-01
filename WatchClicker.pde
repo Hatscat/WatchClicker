@@ -3,7 +3,7 @@ import g4p_controls.*;
 
 MainGame game;
 
-int distanceValue;
+float distanceValue;
 int distanceExponent;
 
 void setup ()
