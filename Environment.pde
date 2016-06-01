@@ -1,58 +1,107 @@
-float distValNoiseK = 0.005;
-float distExpNoiseK = 0.03;
 
-String[] biomes = new String[] { // class Biome ?
-  "DESERT",
-  "FOREST",
-  "TUNDRA",
-  "GRASSLAND",
-  "SKY",
-  "SEA",
-  "SPACE"
-};
-
-float getBiome (int distVal, int distExp)
+float getZoom (float speed)
 {
-  return noise(distVal, distExp) * biomes.length;
+  return 1 / sqrt(speed * 0.001);
 }
 
-int getSplineY (int x, int distVal, int distExp)
+float getCenterX (float distVal, int distExp)
 {
-  return (int)map(noise((distVal - x) * distValNoiseK, distExp * distExpNoiseK), 0, 1, 0, height + 1);
+  return distVal * pow(10, distExp);
 }
 
-
-
-
-void updateNoises (int distVal, int distExp)
+float getSplineY (float x)
 {
-  
+  return noise(x * 0.001, 0.123456789) * height*2;
 }
+/*
+float getSplineAngle (float x)
+{
+  return (noise(x * 0.005, 0.123456789) * PI) - HALF_PI;
+}
+*/
+float getTopSplineRadius (float x, boolean pressed)
+{
+  float min = height * 0.1;
+  float max = height * (pressed ? 0.8 : 0.4);
+  return map(noise(x * 0.01, 1.23456789), 0, 1, min, max);
+}
+
+float getBotSplineRadius (float x, boolean pressed)
+{
+  float min = -height * 0.1;
+  float max = -height * (pressed ? 0.8 : 0.4);
+  return map(noise(x * 0.011, 2.345678901), 0, 1, min, max);
+}
+
+float getHue (float x, float y, float combo)
+{
+  float k = 0.0031;
+  return noise(x * k, y * k, combo);
+}
+
+float getSaturation (float x, float y, boolean pressed)
+{
+  float k = 0.0013;
+  return noise(x * k, y * k, pressed ? 3.456789012 : 4.567890123);
+}
+
+float getValue (float x, float y, boolean pressed)
+{
+  float k = 0.0072;
+  float n = noise(x * k, y * k, pressed ? 5.678901234 : 6.789012345);
+  return n <= 0.22 ? sqrt(n) : n;
+}
+
+color getBgColor (float x, float y, float combo)
+{
+  colorMode(HSB, 1, 1, 1);
+  return color(getHue(x, y, combo), 0.7, 0.6);
+}
+
+color getFgColor (float x, float y, float combo, boolean pressed)
+{
+  colorMode(HSB, 1, 1, 1);
+  return color(getHue(x, y, combo), getSaturation(x, y, pressed), getValue(x, y, pressed));
+}
+
+// ---- ---- ---- ----
 
 void drawEnvironment ()
 {
-  //updateNoises(distanceValue, distanceExponent);
-  
-  distanceValue -= 1;
-  if (distanceValue >= 1000) {
-    distanceValue = 1;
-    distanceExponent += 3;
-  }
-  
-  background(255);
+  float speed = sqrt(1);
+  float zoom = getZoom(speed);
+  float w = max(1, zoom);
+  println(speed, zoom, w);
+  float centerX = getCenterX(distanceValue, distanceExponent);
+  float centerY = getSplineY(centerX);
 
-  noFill();
 
-  beginShape(); 
+  //background(255);
+
+  translate(width/2, height/2);
+  rotate(atan2(centerY - getSplineY(centerX-10), 10));
+  //noFill();
+  noStroke();
   
-
-  for (int x = width >> 1; x > 0; x -= 2) {
-    float y = getSplineY(x, distanceValue, distanceExponent);
-    
-    vertex(x, y); 
+  beginShape();
+  
+  for (float y = -height*.7; y < height*.7; y += 4) {
+    for (float x = -width*.7; x < width*.7; x += 4) {
+      float r = centerY + y;
+      float c = centerX + x;
+      if (r > centerY + getTopSplineRadius(c, false) || r < centerY + getBotSplineRadius(c, false))
+        fill(getFgColor(c, r, 0, false));
+      else
+        fill(getBgColor(c, r, 0));
+      rect(x, y, 4, 4);
+    }
   }
 
   //vertex(width, height);
   //vertex(0, height);
   endShape();
+  
+  distanceValue += speed;
+  
+  //println(frameRate);
 }
