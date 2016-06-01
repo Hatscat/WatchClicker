@@ -1,5 +1,8 @@
 import g4p_controls.*;
 
+
+MainGame game;
+
 int distanceValue;
 int distanceExponent;
 
@@ -7,6 +10,10 @@ void setup ()
 {
   background(0);
   frameRate(30);
+
+  game = new MainGame();
+  createGUI();
+
   distanceValue = 0;
   distanceExponent = 0;
 }
@@ -20,4 +27,8 @@ void settings ()
 void draw ()
 {
   drawEnvironment();
+}
+
+void mouseClicked() {
+  game.onClicked();
 }
