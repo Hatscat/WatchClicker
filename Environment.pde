@@ -71,19 +71,19 @@ void drawEnvironment ()
   float speed = sqrt(1);
   float zoom = getZoom(speed);
   float w = max(1, zoom);
-  println(speed, zoom, w);
   float centerX = getCenterX(distanceValue, distanceExponent);
   float centerY = getSplineY(centerX);
 
 
   //background(255);
-
+  
+  pushMatrix();
   translate(width/2, height/2);
   rotate(atan2(centerY - getSplineY(centerX-10), 10));
   //noFill();
   noStroke();
   
-  beginShape();
+  //beginShape();
   
   for (float y = -height*.7; y < height*.7; y += 4) {
     for (float x = -width*.7; x < width*.7; x += 4) {
@@ -99,8 +99,8 @@ void drawEnvironment ()
 
   //vertex(width, height);
   //vertex(0, height);
-  endShape();
-  
+  //endShape();
+  popMatrix();
   distanceValue += speed;
   
   //println(frameRate);
