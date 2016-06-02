@@ -5,7 +5,7 @@ int distanceExponent;
 
 void setup ()
 {
-  background(0);
+  //background(0);
   frameRate(30);
 
   game = new MainGame();
