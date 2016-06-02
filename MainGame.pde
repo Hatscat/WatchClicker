@@ -25,10 +25,10 @@ class MainGame {
   }
   
   void setDistanceText() {
-    distanceText.setText(String.format("%.2f", distanceValue) + " " + distanceUnits[distanceExponent/3]); 
+    //distanceText.setText(String.format("%.2f", distanceValue) + " " + distanceUnits[distanceExponent/3]); 
   }
   
   void setSpeedText() {
-   speedText.setText(String.format("%.2f", distanceValue) + " " + distanceUnits[distanceExponent/3]); 
+   //speedText.setText(String.format("%.2f", distanceValue) + " " + distanceUnits[distanceExponent/3]); 
   }
 }

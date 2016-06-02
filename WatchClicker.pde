@@ -1,6 +1,3 @@
-import g4p_controls.*;
-
-
 MainGame game;
 
 float distanceValue;
@@ -12,7 +9,6 @@ void setup ()
   frameRate(30);
 
   game = new MainGame();
-  createGUI();
 
   distanceValue = 0;
   distanceExponent = 0;
